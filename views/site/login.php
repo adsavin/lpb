@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'well'
             ],
             'fieldConfig' => [
-                'template' => "{label}<div class=\"col-sm-12\">{input}</div>\n<div class=\"col-sm-8\">{error}</div>",
+                'template' => "{label}<div class=\"col-sm-12\">{input}</div>\n<div class=\"col-sm-12 text-center\">{error}</div>",
                 'labelOptions' => ['class' => 'col-sm-12 text-center'],
             ],
         ]); ?>
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
 
         <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-sm-12 text-center\">{input} {label}</div>\n<div class=\"col-sm-12\">{error}</div>",
+            'template' => "<div class=\"col-sm-12 text-center\">{input} {label}</div>\n<div class=\"col-sm-12 text-center\">{error}</div>",
         ]) ?>
 
             <div class="text-center">
@@ -51,3 +51,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php ActiveForm::end(); ?>
     </div>
 </div>
+<?php
+
+//$this->registerJs("
+//$('#login-form').submit(function(e) {
+//    e.preventDefault();
+//    var password = $('#loginform-password').val() + '".Yii::$app->params['SALT']."';
+//    $('#loginform-password').val(password);
+//    return true;
+//});
+//");

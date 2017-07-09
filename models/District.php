@@ -43,8 +43,8 @@ class District extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name_lao' => Yii::t('app', 'Name Lao'),
-            'name_eng' => Yii::t('app', 'Name Eng'),
+            'name_lao' => Yii::t('app', 'Lao Name'),
+            'name_eng' => Yii::t('app', 'English Name'),
         ];
     }
 
@@ -63,5 +63,9 @@ class District extends \yii\db\ActiveRecord
     public static function find()
     {
         return new DistrictQuery(get_called_class());
+    }
+
+    public static function getName() {
+        return Yii::$app->language == "la-LA"? 'name_lao':'name_eng';
     }
 }

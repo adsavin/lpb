@@ -14,6 +14,8 @@ use yii\filters\VerbFilter;
  */
 class PlaceController extends Controller
 {
+    public $layout = "index";
+
     /**
      * @inheritdoc
      */
@@ -120,5 +122,9 @@ class PlaceController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionSyncfirebase() {
+
     }
 }

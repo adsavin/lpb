@@ -10,7 +10,7 @@ $this->beginContent('@app/views/layouts/main.php');
 
 <?php
 NavBar::begin([
-    'brandLabel' => Yii::t('app', 'Luangprabang'),
+    'brandLabel' => Yii::t('app', Yii::$app->params["appname"]),
     'brandUrl' => Yii::$app->homeUrl,
     'options' => [
         'class' => 'navbar-inverse navbar-fixed-top',
@@ -29,3 +29,4 @@ NavBar::end();
     <?= $content ?>
 </div>
 <?php $this->endContent(); ?>
+<script type="text/javascript" src="js/jquery.sha1.js"></script>

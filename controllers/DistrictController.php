@@ -14,6 +14,8 @@ use yii\filters\VerbFilter;
  */
 class DistrictController extends Controller
 {
+    public $layout = "index";
+
     /**
      * @inheritdoc
      */

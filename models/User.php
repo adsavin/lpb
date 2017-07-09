@@ -21,6 +21,9 @@ use yii\web\IdentityInterface;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+    public static $ROLES = ["User", "Admin"];
+    public static $STATUS = ["Active", "Inactive"];
+
     public static function findIdentity($id)
     {
         return User::findOne(['id' => $id]);
@@ -101,5 +104,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public static function find()
     {
         return new UserQuery(get_called_class());
+    }
+
+    public static function findByUsername($username) {
+        return User::findOne(['username' => $username]);
+    }
+
+    public function validatePassword($password) {
+        return sha1($password . Yii::$app->params["SALT"]) === $this->password;
     }
 }

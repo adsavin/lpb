@@ -65,6 +65,7 @@ class SiteController extends Controller
             return $this->redirect(["site/login"]);
         }
 
+        $this->layout = "index";
         return $this->render('index');
     }
 
@@ -99,5 +100,9 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionGetpublickey() {
+        echo Yii::$app->params["SALT"];
     }
 }
