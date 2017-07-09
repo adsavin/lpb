@@ -11,39 +11,43 @@ $this->title = Yii::t('app', 'Login');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
-        <h1><?= Html::encode($this->title) ?></h1>
-
-        <p>Please fill out the following fields to login:</p>
+    <div class="col-sm-6 col-sm-offset-3 ">
+        <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+        <p class="text-center"><?= Yii::t('app','Please fill out the following fields to login') ?>:</p>
 
         <?php $form = ActiveForm::begin([
             'id' => 'login-form',
             'layout' => 'horizontal',
+            'options' => [
+                'class' => 'well'
+            ],
             'fieldConfig' => [
-                'template' => "{label}\n<div class=\"col-sm-12\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-                'labelOptions' => ['class' => 'col-lg-1 control-label'],
+                'template' => "{label}<div class=\"col-sm-12\">{input}</div>\n<div class=\"col-sm-8\">{error}</div>",
+                'labelOptions' => ['class' => 'col-sm-12 text-center'],
             ],
         ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => Yii::t('app', 'Username')]) ?>
+        <?= $form->field($model, 'username')
+            ->textInput([
+                'autofocus' => true,
+                'class' => 'form-control text-center',
+                'placeholder' => Yii::t('app', 'Username')
+            ])
+        ?>
 
-        <?= $form->field($model, 'password')->passwordInput(['placeholder' => Yii::t('app', 'Password')]) ?>
+        <?= $form->field($model, 'password')
+            ->passwordInput([
+                'class' => 'form-control text-center',
+                'placeholder' => Yii::t('app', 'Password')
+            ]) ?>
 
         <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'template' => "<div class=\"col-sm-12 text-center\">{input} {label}</div>\n<div class=\"col-sm-12\">{error}</div>",
         ]) ?>
 
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+            <div class="text-center">
+                <?= Html::submitButton(Yii::t('app', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
-        </div>
-
         <?php ActiveForm::end(); ?>
-
-        <div class="col-lg-offset-1" style="color:#999;">
-            You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-            To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-        </div>
     </div>
 </div>
