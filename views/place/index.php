@@ -16,29 +16,36 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Place'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Add'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
+<?php Pjax::begin(); ?>
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'name_lao',
-            'name_eng',
-            'lat',
-            'lon',
-            // 'village_lao',
-            // 'village_eng',
-            // 'description_lao:ntext',
-            // 'description_eng:ntext',
-            // 'district_id',
-            // 'user_id',
-            // 'last_update',
-            // 'logo',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'label' => Yii::t('app', 'Logo'),
+                'value' => function($data) {
+                    return Html::img("image/".$data->logo, ['style' => 'height: 100px;']);
+                }
+            ],
+            \app\models\District::getName(),
+            Yii::$app->language == "la-LA" ? 'village_lao':'village_eng',
+             [
+                 'attribute' => 'district_id',
+                 'label' => Yii::t('app', 'District'),
+                 'filter' => \yii\helpers\ArrayHelper::map(\app\models\District::find()->all(), "id", \app\models\District::getName())
+             ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttonOptions' => [
+                    'class' => 'btn btn-default'
+                ],
+                'options' => [
+                    'style' => 'width: 15%'
+                ]
+            ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>

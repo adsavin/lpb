@@ -18,8 +18,14 @@ NavBar::begin([
 ]);
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav navbar-right'],
+    'encodeLabels' => false,
     'items' => [
-        ['label' => 'Login', 'url' => ['/site/login']]
+        ['label' => '<i class="fa fa-flag"></i> '. (Yii::$app->language == "en-US" ? "ລາວ" : "ENG")
+            , 'url' => ['/site/changelang', 'l' => Yii::$app->language == "en-US"?"la":"en"]
+            , 'options' => [
+                'class' => 'btnchangelang'
+            ]],
+        ['label' => '<i class="fa fa-sign-in"></i> '. Yii::t('app', 'Login'), 'url' => ['/site/login']]
     ],
 ]);
 NavBar::end();

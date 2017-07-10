@@ -12,10 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3 ">
-        <div class="text-center">
-            <a class="btnchangelang" href="#" data-lang="la"><img src="image/LA.png" /></a>
-            <a class="btnchangelang" href="#" data-lang="en"><img src="image/US.png" /></a>
-        </div>
         <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
         <p class="text-center"><?= Yii::t('app','Please fill out the following fields to login') ?>:</p>
         <?php $form = ActiveForm::begin([

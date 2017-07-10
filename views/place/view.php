@@ -6,14 +6,12 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Place */
 
-$this->title = $model->id;
+$this->title = $model[\app\models\District::getName()];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Places'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="place-view">
-
     <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
@@ -25,23 +23,78 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'name_lao',
-            'name_eng',
-            'lat',
-            'lon',
-            'village_lao',
-            'village_eng',
-            'description_lao:ntext',
-            'description_eng:ntext',
-            'district_id',
-            'user_id',
-            'last_update',
-            'logo',
-        ],
-    ]) ?>
+    <div class="row">
+        <div class="col-sm-4">
+            <?= Html::img(Yii::$app->params["LOGOPATH"].$model->logo, ["class" => "img img-thumbnail"]) ?>
+        </div>
+        <div class="col-sm-8">
+
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    'name_lao',
+                    'name_eng',
+                    'village_lao',
+                    'village_eng',
+                    'description_lao:ntext',
+                    'description_eng:ntext',
+                    [
+                        'label' => Yii::t("app", "District"),
+                        'format' => 'html',
+                        'value' => function($data) {
+                            return Html::a($data->district[\app\models\District::getName()], ["district/view", "id" => $data->district_id]);
+                        }
+                    ],
+                    [
+                        'label' => Yii::t("app", "Last Update"),
+                        'format' => 'html',
+                        'value' => function($data) {
+                            return Html::a($data->user->username, ["user/view", "id" => $data->user_id]) . " - ".date("d/m/Y H:i:s",strtotime($data->last_update));
+                        }
+                    ],
+                    [
+                        'attribute' => 'status',
+                        'format' => 'html',
+                        'value' => function($data) {
+                            switch ($data->status) {
+                                case "Show":
+                                    return "<span class='label label-success'>".Yii::t('app',$data->status)."</span>";
+                                case "Draft":
+                                    return "<span class='label label-warning'>".Yii::t('app',$data->status)."</span>";
+                                case "Deleted":
+                                    return "<span class='label label-danger'>".Yii::t('app',$data->status)."</span>";
+                                default:
+                                    return "-";
+                            }
+                        }
+                    ]
+                ],
+            ]) ?>
+        </div>
+        <div class="col-sm-12" id="map" style="height: 400px;">
+
+        </div>
+    </div>
 
 </div>
+
+<script type="text/javascript">
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      mapTypeId: "hybrid",
+      zoom: 13
+    });
+    var marker = new google.maps.Marker();
+      <?php if(isset($model->lat) && isset($model->lon)): ?>
+    var myLatlng = {lat: <?= $model->lat ?>, lng: <?= $model->lon ?>};
+    marker.setPosition({lat: e.latLng.lat(), lng: e.latLng.lng()});
+    marker.setMap(map);
+      <?php else: ?>
+    var myLatlng = {lat: 19.884266067849776, lng: 102.13431358337402};
+      <?php endif; ?>
+    map.setCenter(myLatlng);
+  }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBshodpPyQhHr3qoJ9287qY8G4o7tZRDf8&callback=initMap">
+</script>

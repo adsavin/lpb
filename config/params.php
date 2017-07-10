@@ -2,6 +2,8 @@
 
 return [
     'appname' => 'SELECT',
-    'adminEmail' => 'admin@example.com',
-    'SALT' => 'KeoKinKhaoKubB@n@n@'
+    'SALT' => 'KeoKinKhaoKubB@n@n@',
+    'UPLOADPATH' => 'upload/',
+    'PHOTOPATH' => 'upload/photo/',
+    'LOGOPATH' => 'upload/logo/',
 ];

@@ -20,6 +20,7 @@ use Yii;
  * @property integer $user_id
  * @property string $last_update
  * @property string $logo
+ * @property string $status
  *
  * @property Photo[] $photos
  * @property District $district
@@ -27,11 +28,12 @@ use Yii;
  */
 class Place extends \yii\db\ActiveRecord
 {
+    public static $STATUS = ["Draft" => "Draft", "Show" => "Show"];
+
     /**
      * @var UploadedFile[]
      */
     public $photouploader;
-
     public $logouploader;
 
     /**
@@ -49,11 +51,10 @@ class Place extends \yii\db\ActiveRecord
     {
         return [
             [['name_lao', 'name_eng', 'district_id', 'user_id'], 'required'],
-            [['lat', 'lon'], 'number'],
             [['description_lao', 'description_eng'], 'string'],
             [['district_id', 'user_id'], 'integer'],
             [['last_update'], 'safe'],
-            [['name_lao', 'name_eng', 'village_lao', 'village_eng', 'logo'], 'string', 'max' => 255],
+            [['name_lao', 'name_eng', 'village_lao', 'village_eng', 'logo', 'lat', 'lon'], 'string', 'max' => 255],
             [['name_lao'], 'unique'],
             [['name_eng'], 'unique'],
             [['district_id'], 'exist', 'skipOnError' => true, 'targetClass' => District::className(), 'targetAttribute' => ['district_id' => 'id']],

@@ -20,6 +20,24 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <link rel="stylesheet" href="css/font-awesome.css" />
+    <style>
+        .btnchangelang {
+            font-family: "Noto Sans Lao", "Noto Serif Lao"
+            , "Noto Sans Southeast Asian", "Noto Serif Southeast Asian"
+            , "Saysettha OT", "Phetsarath OT"
+            , "Helvetica Neue", Helvetica, Arial
+            , sans-serif !important;
+        }
+        <?php if(Yii::$app->language == "la-LA"): ?>
+        body {
+            font-family: "Noto Sans Lao", "Noto Serif Lao"
+            , "Noto Sans Southeast Asian", "Noto Serif Southeast Asian"
+            , "Saysettha OT", "Phetsarath OT"
+            , "Helvetica Neue", Helvetica, Arial
+            , sans-serif !important;
+        }
+        <?php endif; ?>
+    </style>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
@@ -32,9 +50,11 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?= Yii::$app->params['appname'] ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"></p>
+        <div class="row">
+            <div class="col-md-6">
+                &copy; <?= Yii::$app->params['appname'] ?> <?= date('Y') ?>
+            </div>
+        </div>
     </div>
 </footer>
 

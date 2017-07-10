@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 
-$this->title = $model->id;
+$this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -28,14 +28,38 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'username',
-            'password',
             'first_name',
             'last_name',
             'phone_no',
-            'status',
-            'role',
+            [
+                'attribute' => 'status',
+                'format' => 'html',
+                'value' => function($data) {
+                    switch($data->status) {
+                        case "Active":
+                            return "<span class='label label-success'>Active</i>";
+                        case "Inactive":
+                            return "<span class='label label-danger'>Inctive</i>";
+                        default:
+                            return "-";
+                    }
+                }
+            ],
+            [
+                'attribute' => 'role',
+                'format' => 'html',
+                'value' => function($data) {
+                    switch($data->role) {
+                        case "Admin":
+                            return "<span class='label label-primary'>Admin</i>";
+                        case "User":
+                            return "<span class='label label-default'>User</i>";
+                        default:
+                            return "-";
+                    }
+                }
+            ],
         ],
     ]) ?>
 

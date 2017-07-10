@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use dosamigos\ckeditor\CKEditor;
+//use dosamigos\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Place */
@@ -28,16 +28,16 @@ use dosamigos\ckeditor\CKEditor;
         <?= $form->field($model, 'name_eng')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'description_lao')->widget(CKEditor::className(), [
-            'options' => ['rows' => 6],
-            'preset' => 'basic'
-        ]) ?>
+<?//= $form->field($model, 'description_lao')->widget(CKEditor::className(), [
+//            'options' => ['rows' => 6],
+//            'preset' => 'basic'
+//        ]) ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'description_eng')->widget(CKEditor::className(), [
-            'options' => ['rows' => 6],
-            'preset' => 'basic'
-        ]) ?>
+<?//= $form->field($model, 'description_eng')->widget(CKEditor::className(), [
+//            'options' => ['rows' => 6],
+//            'preset' => 'basic'
+//        ]) ?>
     </div>
     <div class="col-md-12" id="map" style="height: 500px;width: 100%"></div>
     <div class="col-md-6">
@@ -52,10 +52,19 @@ use dosamigos\ckeditor\CKEditor;
     <div class="col-md-6">
         <?= $form->field($model, 'village_eng')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-md-12">
-    <?= $form->field($model, 'district_id')
+    <div class="col-md-6">
+        <?= $form->field($model, 'district_id')
         ->dropDownList(
-                \yii\helpers\ArrayHelper::map(\app\models\District::find()->all(), "id", Yii::$app->language == "la-LA" ? "name_lao" : "name_eng")) ?>
+                \yii\helpers\ArrayHelper::map(\app\models\District::find()->all(), "id"
+                    , Yii::$app->language == "la-LA" ? "name_lao" : "name_eng"), [
+            'prompt' => ''
+        ]) ?>
+    </div>
+    <div class="col-md-6">
+        <?= $form->field($model, 'status')
+            ->dropDownList(\app\models\Place::$STATUS, [
+                    'prompt' => ''
+            ]) ?>
     </div>
     <div class="col-md-12 text-center">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

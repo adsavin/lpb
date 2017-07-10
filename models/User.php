@@ -23,6 +23,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     public static $ROLES = ["User", "Admin"];
     public static $STATUS = ["Active", "Inactive"];
+    public $oldpassword;
+    public $newpassword;
+    public $confirmpassword;
 
     public static function findIdentity($id)
     {
@@ -64,7 +67,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password'], 'required'],
+            [['username'], 'required'],
             [['status', 'role'], 'string'],
             [['username'], 'string', 'max' => 100],
             [['password', 'first_name', 'last_name', 'phone_no'], 'string', 'max' => 255],

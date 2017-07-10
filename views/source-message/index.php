@@ -33,7 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $data->messages[0]->translation;
                 }
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttonOptions' => [
+                    'class' => 'btn btn-default'
+                ],
+                'options' => [
+                    'style' => 'width: 15%'
+                ]
+            ],
         ],
     ]); ?>
 <?php Pjax::end(); ?>

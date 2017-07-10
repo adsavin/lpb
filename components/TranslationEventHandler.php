@@ -25,18 +25,16 @@ class TranslationEventHandler
                     $s = new SourceMessage();
                     $s->message = $event->message;
                     $s->category = $event->category;
-                    if (!$s->save()) {
-                        \Yii::error(json_encode($s->errors));
-                    }
+                    if (!$s->save())
+                        throw new Exception(json_encode($s->errors));
                     $m = new Message();
                     $m->language = $event->language;
                     $m->id = $s->id;
-                    if (!$m->save()) {
-                        \Yii::error(json_encode($m->errors));
-                    }
+                    if (!$m->save())
+                        throw new Exception(json_encode($m->errors));
                 }
             } catch (Exception $x) {
-                \Yii::error(json_encode($x));
+                print_r($x->getMessage());exit;
             }
         }
     }
