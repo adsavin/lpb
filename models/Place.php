@@ -28,6 +28,13 @@ use Yii;
 class Place extends \yii\db\ActiveRecord
 {
     /**
+     * @var UploadedFile[]
+     */
+    public $photouploader;
+
+    public $logouploader;
+
+    /**
      * @inheritdoc
      */
     public static function tableName()
@@ -51,6 +58,9 @@ class Place extends \yii\db\ActiveRecord
             [['name_eng'], 'unique'],
             [['district_id'], 'exist', 'skipOnError' => true, 'targetClass' => District::className(), 'targetAttribute' => ['district_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+
+            [['logouploader'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 3076000],
+            [['photouploader'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 100, 'maxSize' => 3076000],
         ];
     }
 

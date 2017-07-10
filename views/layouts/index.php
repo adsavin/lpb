@@ -19,23 +19,32 @@ NavBar::begin([
 ]);
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav'],
+    'encodeLabels' => false,
     'items' => [
-        ['label' => Yii::t('app', 'Place'), 'url' => ['/place/index'],
+        ['label' => '<i class="fa fa-picture-o"></i> '. Yii::t('app', 'Place'), 'url' => ['/place/index'],
             'options' => ['class' => '']
         ],
-        ['label' => Yii::t('app', 'District'), 'url' => ['/district/index']],
-        ['label' => Yii::t('app', 'User'), 'url' => ['/user/index']]
+        ['label' => '<i class="fa fa-th-list"></i> '. Yii::t('app', 'District'), 'url' => ['/district/index']],
+        [
+            'label' => '<i class="fa fa-user"></i> '. Yii::t('app', 'User'),
+            'url' => ['/user/index']
+        ],
+        [
+            'label' => '<i class="fa fa-language"></i> '. Yii::t('app', 'Translation'),
+            'url' => ['/source-message/index']
+        ]
     ],
 ]);
 
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav navbar-right'],
+    'encodeLabels' => false,
     'items' => [
-        ['label' => Yii::t('app', 'Change Password'), 'url' => ['/site/index']],
+        ['label' => '<i class="fa fa-key"></i> '. Yii::t('app', 'Change Password'), 'url' => ['/site/changepassword']],
         '<li>'
         . Html::beginForm(['/site/logout'], 'post')
         . Html::submitButton(
-            'Logout (' . Yii::$app->user->identity->username . ')',
+            '<i class="fa fa-sign-out"></i> '. Yii::t('app', 'Logout') .' (' . Yii::$app->user->identity->username . ')',
             ['class' => 'btn btn-link logout']
         )
         . Html::endForm()

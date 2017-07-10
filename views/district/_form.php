@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="district-form">
+<div class="well">
 
     <?php $form = ActiveForm::begin(); ?>
 

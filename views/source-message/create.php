@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Place */
+/* @var $model app\models\SourceMessage */
 
-$this->title = Yii::t('app', 'Add Place');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Places'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Source Message');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Source Messages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="place-create">
+<div class="source-message-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
