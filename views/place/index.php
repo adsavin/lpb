@@ -26,8 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'label' => Yii::t('app', 'Logo'),
+                'format' => 'html',
                 'value' => function($data) {
-                    return Html::img("image/".$data->logo, ['style' => 'height: 100px;']);
+                    return Html::img(Yii::$app->params['LOGOPATH'].$data->logo, ['style' => 'height: 50px;', 'class' => 'img']);
                 }
             ],
             \app\models\District::getName(),
@@ -35,6 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
              [
                  'attribute' => 'district_id',
                  'label' => Yii::t('app', 'District'),
+                 'value' => function($data) {
+                    return $data->district[\app\models\District::getName()];
+                 },
                  'filter' => \yii\helpers\ArrayHelper::map(\app\models\District::find()->all(), "id", \app\models\District::getName())
              ],
             [

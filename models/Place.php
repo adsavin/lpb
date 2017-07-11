@@ -80,7 +80,7 @@ class Place extends \yii\db\ActiveRecord
             'village_eng' => Yii::t('app', 'Village Eng'),
             'description_lao' => Yii::t('app', 'Description Lao'),
             'description_eng' => Yii::t('app', 'Description Eng'),
-            'district_id' => Yii::t('app', 'District ID'),
+            'district_id' => Yii::t('app', 'District'),
             'user_id' => Yii::t('app', 'User ID'),
             'last_update' => Yii::t('app', 'Last Update'),
             'logo' => Yii::t('app', 'Logo'),

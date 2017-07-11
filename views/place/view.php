@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="place-view">
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
+        <?= Html::a(Yii::t('app', 'Photo'), ['updatephoto', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -25,19 +26,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-sm-4">
-            <?= Html::img(Yii::$app->params["LOGOPATH"].$model->logo, ["class" => "img img-thumbnail"]) ?>
+            <?= Html::img(Yii::$app->params["LOGOPATH"].$model->logo, ["class" => "img img-thumbnail", 'style' => 'height: 400px']) ?>
         </div>
         <div class="col-sm-8">
 
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'name_lao',
-                    'name_eng',
-                    'village_lao',
-                    'village_eng',
-                    'description_lao:ntext',
-                    'description_eng:ntext',
+                    Yii::$app->language == "la-LA"?'name_lao':'name_eng',
+                    Yii::$app->language == "la-LA"?'village_lao':'village_eng',
+                    [
+                        'attribute' => Yii::$app->language == "la-LA"?'description_lao':'description_eng',
+                        'format' => 'html',
+                    ],
                     [
                         'label' => Yii::t("app", "District"),
                         'format' => 'html',
@@ -87,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
     var marker = new google.maps.Marker();
       <?php if(isset($model->lat) && isset($model->lon)): ?>
     var myLatlng = {lat: <?= $model->lat ?>, lng: <?= $model->lon ?>};
-    marker.setPosition({lat: e.latLng.lat(), lng: e.latLng.lng()});
+    marker.setPosition(myLatlng);
     marker.setMap(map);
       <?php else: ?>
     var myLatlng = {lat: 19.884266067849776, lng: 102.13431358337402};

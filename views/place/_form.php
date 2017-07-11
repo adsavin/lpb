@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-//use dosamigos\ckeditor\CKEditor;
+use dosamigos\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Place */
@@ -14,30 +14,46 @@ use yii\widgets\ActiveForm;
         ['options' => ['enctype' => 'multipart/form-data']]
     ); ?>
 
-    <div class="col-md-12 text-center">
+    <div class="col-md-4 text-center">
         <div >
-            <img class="img img-thumbnail" id="previewlogo" style="max-width: 40%" />
+            <img class="img img-thumbnail" src="<?= isset($model->logo)? Yii::$app->params["LOGOPATH"].$model->logo:'' ?>" id="previewlogo" style="max-width: 80%" />
         </div>
         <button id="btnlogo" type="button" class="btn btn-primary"><i class="fa fa-camera"></i> <?= Yii::t('app', 'Logo') ?></button>
         <?= $form->field($model, 'logouploader')->fileInput(['accept' => 'image/*', 'class' => 'hidden'])->label(false) ?>
     </div>
-    <div class="col-md-6">
-        <?= $form->field($model, 'name_lao')->textInput(['maxlength' => true]) ?>
-    </div>
-    <div class="col-md-6">
-        <?= $form->field($model, 'name_eng')->textInput(['maxlength' => true]) ?>
-    </div>
-    <div class="col-md-6">
-<?//= $form->field($model, 'description_lao')->widget(CKEditor::className(), [
-//            'options' => ['rows' => 6],
-//            'preset' => 'basic'
-//        ]) ?>
-    </div>
-    <div class="col-md-6">
-<?//= $form->field($model, 'description_eng')->widget(CKEditor::className(), [
-//            'options' => ['rows' => 6],
-//            'preset' => 'basic'
-//        ]) ?>
+    <div class="col-md-8">
+        <div class="col-md-6">
+            <?= $form->field($model, 'name_lao')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'name_eng')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'description_lao')->widget(CKEditor::className(), [
+                'options' => ['rows' => 6],
+                'preset' => 'basic'
+            ]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'description_eng')->widget(CKEditor::className(), [
+                'options' => ['rows' => 6],
+                'preset' => 'basic'
+            ]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'village_lao')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'village_eng')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-12">
+            <?= $form->field($model, 'district_id')
+                ->dropDownList(
+                    \yii\helpers\ArrayHelper::map(\app\models\District::find()->all(), "id"
+                        , Yii::$app->language == "la-LA" ? "name_lao" : "name_eng"), [
+                    'prompt' => ''
+                ]) ?>
+        </div>
     </div>
     <div class="col-md-12" id="map" style="height: 500px;width: 100%"></div>
     <div class="col-md-6">
@@ -46,21 +62,8 @@ use yii\widgets\ActiveForm;
     <div class="col-md-6">
         <?= $form->field($model, 'lon')->textInput() ?>
     </div>
-    <div class="col-md-6">
-        <?= $form->field($model, 'village_lao')->textInput(['maxlength' => true]) ?>
-    </div>
-    <div class="col-md-6">
-        <?= $form->field($model, 'village_eng')->textInput(['maxlength' => true]) ?>
-    </div>
-    <div class="col-md-6">
-        <?= $form->field($model, 'district_id')
-        ->dropDownList(
-                \yii\helpers\ArrayHelper::map(\app\models\District::find()->all(), "id"
-                    , Yii::$app->language == "la-LA" ? "name_lao" : "name_eng"), [
-            'prompt' => ''
-        ]) ?>
-    </div>
-    <div class="col-md-6">
+
+    <div class="col-md-4 col-md-offset-4">
         <?= $form->field($model, 'status')
             ->dropDownList(\app\models\Place::$STATUS, [
                     'prompt' => ''
@@ -81,7 +84,7 @@ use yii\widgets\ActiveForm;
         var marker = new google.maps.Marker();
         <?php if(isset($model->lat) && isset($model->lon)): ?>
             var myLatlng = {lat: <?= $model->lat ?>, lng: <?= $model->lon ?>};
-            marker.setPosition({lat: e.latLng.lat(), lng: e.latLng.lng()});
+            marker.setPosition(myLatlng);
             marker.setMap(map);
         <?php else: ?>
             var myLatlng = {lat: 19.884266067849776, lng: 102.13431358337402};

@@ -161,6 +161,13 @@ class PlaceController extends Controller
         }
     }
 
+    public function actionUpdatephoto($id) {
+        $model = $this->findModel($id);
+        return $this->render('photo', [
+            'model' => $model
+        ]);
+    }
+
     public function actionSyncfirebase() {
 
     }

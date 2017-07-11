@@ -113,6 +113,6 @@ class SiteController extends Controller
     public function actionChangelang($l = "en") {
         Yii::$app->language = $l == "la" ? "la-LA" : "en-US";
         Yii::$app->session->set("lang", Yii::$app->language);
-        return $this->goBack();
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }
