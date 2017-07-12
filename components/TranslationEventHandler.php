@@ -28,13 +28,13 @@ class TranslationEventHandler
                     if (!$s->save())
                         throw new Exception(json_encode($s->errors));
                     $m = new Message();
-                    $m->language = $event->language;
+                    $m->language = isset($event->language)? $event->language:"la-LA";
                     $m->id = $s->id;
                     if (!$m->save())
                         throw new Exception(json_encode($m->errors));
                 }
             } catch (Exception $x) {
-                print_r($x->getMessage());exit;
+                \Yii::$app->session->setFlash("warning", $x->getMessage());
             }
         }
     }

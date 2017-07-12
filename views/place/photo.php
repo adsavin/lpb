@@ -14,71 +14,49 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="place-create">
     <h1><?= Html::encode($this->title) ?></h1>
-    <div class="row">
-        <?php foreach ($model->photos as $photo): ?>
-            <div class="col-lg-3 col-md-4">
-                <img class="img " src="<?= Yii::$app->params['LOGOPATH'].$photo ?>" />
-                <button class="btn btn-danger" type="button"><i class="fa fa-remove"></i> </button>
-            </div>
-        <?php endforeach; ?>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-3">
-                <button id="btnaddphoto" class="btn btn-info" type="button"><i class="fa fa-plus-square"></i> <?= Yii::t('app', 'Add Photos') ?></button>
-            </div>
-        </div>
-    </div>
-    <hr />
     <?php $form = ActiveForm::begin(
         ['options' => ['enctype' => 'multipart/form-data']]
     ); ?>
     <div class="well row" id="newphoto">
-
+        <?php for($i=0; $i<4; $i++): ?>
+            <div class="col-lg-3 col-md-4">
+                <button type="button" class="btn btn-info btnaddphoto col-xs-12" data-id="<?= $i ?>" >
+                    <i class="fa fa-camera"></i> </button>
+                <img class="img" style="width: 100%" id="preview-<?= $i ?>" />
+                <?= $form->field($model, "photouploader[$i]")
+                    ->fileInput(['class' => 'hidden', 'id' => "btn-$i", "data-id" => $i])
+                    ->label(false); ?>
+            </div>
+        <?php endfor; ?>
+        <div class="col-xs-4 col-xs-offset-4">
+            <button type="submit" class="btn btn-primary col-xs-12"><?= Yii::t("app", "Save") ?> </button>
+        </div>
     </div>
     <?php ActiveForm::end(); ?>
+    <div class="row">
+        <?php foreach ($model->photos as $photo): ?>
+            <div class="col-lg-3 col-md-4 text-center" data-id="<?= $photo->id ?>">
+                <img class="img " style="width: 100%" src="<?= Yii::$app->params['PHOTOPATH'].$photo->filename ?>" />
+                <button class="btn btn-danger btnremove" data-id="<?= $photo->id ?>" type="button"><i class="fa fa-remove"></i> </button>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <hr />
 </div>
 
 <?php
-$this->registerJs('
-    var id = 0; 
-    $("#btnaddphoto").click(function() {
-        id++; 
-        $container = new $("<div>");
-        $container.addClass("col-lg-3")
-            .addClass("col-md-4")
-            .data("id", id)
-            .css("height", "200px")
-        ;
-        
-        $input = new $("<input>");
-        $input.attr("type", "file")
-            .attr("name", "Place[photoupload]["+id+"]")
-            .addClass("form-control")
-            .addClass("hidden")
-        ;
-        $preview = $("<img>");
-        $preview.addClass("img")
-            .data("id", id)
-        ;                
-               
-        $container.append($input)
-            .append($preview)            
-        ;
-        $("#newphoto").append($container);
-        $input.click();
-        $input.change(function() {
-            previewImage($input, $preview);
-            $btnremove = new $("<button>");
-            $btnremove.addClass("btn")
-                .addClass("btn-danger")
-                .data("id", id)
-                .append("<i class=\"fa fa-remove\"></i>")
-            ;
-            $btnremove.click(function() {
-                $container.remove();
-            });
-            $container.append($btnremove);
+$this->registerJs('     
+    $(".btnaddphoto").click(function() {
+        $("#btn-"+$(this).data("id")).click();
+    });
+    
+    $("input.hidden").change(function() {
+        previewImage(this, $("#preview-"+$(this).data("id")));
+    });
+    
+    $(".btnremove").click(function() {
+        $.post("index.php?r=place/removephoto", {id: $(this).data("id")}, function(data) {
+            $("button[data-id="+data+"]").remove();
         });
     });
 

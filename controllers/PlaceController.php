@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Photo;
 use Yii;
 use app\models\Place;
 use app\models\PlaceSearch;
@@ -122,8 +123,29 @@ class PlaceController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $temp = $model->logo;
+        if ($model->load(Yii::$app->request->post())) {
+            try {
+                $model->logouploader = UploadedFile::getInstance($model, 'logouploader');
+                if(!isset($model->logouploader))
+                    $model->logo=$temp;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                if(!$model->save())
+                    throw new Exception(json_encode($model->errors));
+
+                if(isset($model->logouploader)) {
+                    @mkdir(Yii::$app->params["LOGOPATH"]);
+                    if(!file_exists($model->logo))
+                        $model->logouploader->saveAs(Yii::$app->params["LOGOPATH"].$model->logo);
+                }
+
+                $tx->commit();
+                return $this->redirect(['view', 'id' => $model->id]);
+            } catch (Exception $ex) {
+                $tx->rollBack();
+                Yii::$app->session->setFlash("danger", $ex->getMessage());
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -163,9 +185,43 @@ class PlaceController extends Controller
 
     public function actionUpdatephoto($id) {
         $model = $this->findModel($id);
+        $post = Yii::$app->request->post("Place");
+        if(isset($post)) {
+            $tx = Yii::$app->db->beginTransaction();
+            try {
+                $model->photouploader = UploadedFile::getInstances($model, "photouploader");
+                foreach ($model->photouploader as $uploader) {
+                    $p = new Photo();
+                    $p->filename = date("YmdHis").rand(1000,9999).".".$uploader->extension;
+                    $p->place_id = $model->id;
+                    if(!$p->save())
+                        throw new Exception(json_encode($p->errors));
+                    @mkdir(Yii::$app->params["PHOTOPATH"]);
+                    if(!file_exists(Yii::$app->params["PHOTOPATH"].$p->filename))
+                        if(!$uploader->saveAs(Yii::$app->params["PHOTOPATH"].$p->filename))
+                            throw new Exception(Yii::t('app', 'Cannot Upload Photo'));
+                }
+                $tx->commit();
+                Yii::$app->session->setFlash("success", Yii::t('app', 'Success'));
+            } catch (Exception $ex) {
+                $tx->rollBack();
+                Yii::$app->session->setFlash("danger", $ex->getMessage());
+            }
+            return $this->refresh();
+        }
         return $this->render('photo', [
             'model' => $model
         ]);
+    }
+
+    public function actionRemovephoto() {
+        if(Yii::$app->request->isAjax) {
+            $photo = Photo::findOne($_POST['id']);
+            if(Photo::deleteAll(['id' => $photo->id]) == 1){
+                @unlink(Yii::$app->params["PHOTOPATH"].$photo->filename);
+                echo $photo->id;
+            }
+        }
     }
 
     public function actionSyncfirebase() {
