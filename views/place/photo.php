@@ -17,6 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $form = ActiveForm::begin(
         ['options' => ['enctype' => 'multipart/form-data']]
     ); ?>
+    <div class="page-header">
+        <h1><small><?= Yii::t('app', 'Add New Photos') ?></small></h1>
+    </div>
     <div class="well row" id="newphoto">
         <?php for($i=0; $i<4; $i++): ?>
             <div class="col-lg-3 col-md-4">
@@ -28,14 +31,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     ->label(false); ?>
             </div>
         <?php endfor; ?>
+    </div>
+    <div class="row">
         <div class="col-xs-4 col-xs-offset-4">
             <button type="submit" class="btn btn-primary col-xs-12"><?= Yii::t("app", "Save") ?> </button>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
+    <div class="page-header">
+        <h1><small><?= Yii::t('app', 'Current Photos') ?></small></h1>
+    </div>
     <div class="row">
         <?php foreach ($model->photos as $photo): ?>
-            <div class="col-lg-3 col-md-4 text-center" data-id="<?= $photo->id ?>">
+            <div class="col-lg-3 col-md-4 text-center photo" data-id="<?= $photo->id ?>">
                 <img class="img " style="width: 100%" src="<?= Yii::$app->params['PHOTOPATH'].$photo->filename ?>" />
                 <button class="btn btn-danger btnremove" data-id="<?= $photo->id ?>" type="button"><i class="fa fa-remove"></i> </button>
             </div>
@@ -56,7 +64,7 @@ $this->registerJs('
     
     $(".btnremove").click(function() {
         $.post("index.php?r=place/removephoto", {id: $(this).data("id")}, function(data) {
-            $("button[data-id="+data+"]").remove();
+            $(".photo[data-id="+data+"]").remove();
         });
     });
 

@@ -72,6 +72,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]) ?>
         </div>
+        <div class="row">
+            <?php foreach ($model->photos as $photo): ?>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                    <img class="img img-thumbnail" src="<?= Yii::$app->params['PHOTOPATH'].$photo->filename ?>" />
+                </div>
+            <?php endforeach; ?>
+        </div>
         <div class="col-sm-12" id="map" style="height: 400px;">
 
         </div>
