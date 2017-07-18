@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "luangprabang-173307",
+  "private_key_id": "c87aa49a5004257ff53bba1ce215649ec91ad0df",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDrHH064HFnX4j9\nhsos+S1tq3YwSSF0L4SkJqcEC18vawY4fxAVWiO2U/t0mgDGNMzdwrMnShXiROeI\nHq77gVeYL4cEvhNlZXxKMY6KZZDZIOQXD1V6ZxBXAIy0GiSSeUWDbsD7f7tiwL0P\nO+uwR01BGRC1LUXC0JHs3OYTSWj5wRxAhfvlOx/5IM4j8aN+nEqJV7y2j9hkLO8J\ncskxxhbMfASjO91B1/DYnBVcZykcwN/FZE1ObqPbbz4uxtyDOLSBPj6Cugj3Vtyr\n+6dLRMuxrm1h2KYMBFGjCtF113X8ASSWQGVrmHbsfyQ5ZMn0UQvtgortSK79fUg2\n7JaShxkpAgMBAAECggEAG1LpyOxpsZJcSN6f438oBO1e5HizTx3wo+UsFt+9dbTR\n+cHmnByoNtnmyOPXADIFtyYYDRJinbPVVq/+NROQmwq2/dmbRnb3bWX6A2KPZXSZ\nnYZ2MC4HK51QPOQm6PD4H7DA89mh7PWqYzlbCFcZBt5DX1L+Hwh/VRBNGuO2tAPA\n3BeBPIJUzvw7Fw/ITkyPUsv7bcVuLsKvUPaNeBzezvfeS5dsOESQdUVJf6LFQI9l\n+74T1Q42MAj154D56ej5wqfZplsFyY7PSacSsp4IbagOdFH+hljP647DZNoEgz6O\nRtRBRgJCHOJlLvBy7Rj39FxpC6u7RkCuqexF0wfQqwKBgQD6SDzjRie5hI6IX8kg\n42khSUfAnEW9zlgo6C+LU8Wt4Mav13lyhJ3tFPbN4NYcerFB7ohppQk8/ACEaI1x\n/4yymVXJl5V7BGMx7WAow6mrhO1lYgCOzg0DW96biQk7kMlbym5fzwZidBGWtaZC\ntgtXOR9JO4zCgC1l0UarFGdJtwKBgQDwe4ZxRUOnwFi6QMJnWESAG0PBW8kjmn2i\nXNOA3ZqJbaBqizOki0memZb39gly1W5DrCMTTRkhONVcET+jDWGAnag3Ilfsqa0S\nXojLbQL/6yDrnmx0vK+WU/09laNHEIyeUMB047l8LFClFOggcRRHX32CmEfzNlfn\nSLG1iVQ0HwKBgQC1o/WkkEbGSiDTcojauJCU2sUbUY7/6KBs182hlWOzBJ3OAlie\ntwaSiJNx6UobEyRQEFiqK19gBhguAF8fK/Mlr0jmbH/M7us60ebmztH1rBxKZuy2\nt24UUPlm8fZkZ3jriCfAmtQsYcZeFWkbo1jprYg6MuC+TB4mddKO2Nj5UwKBgGDB\nUlZAh/f2a7yEUbNC0Ey6q4ggZcztW573uiEfCA5DDUfQufZ6FCS7pwIc+7A4LyUL\nHRGm83VqaG2igvgXaiNVS1jjeHy/x+KcJm2yboKJF7W1B+3v/LV/FWSxz//HqMwJ\nsWVWOkq7ibbhsoNa+827ncPtgQVZ2AQ2O0nO9xIBAoGBAN724jkKgjNNUwenzmaE\nIWdpuGLo5Hl0V1U0dWyNXHPKQl43XlRodbnAIAYh+fsf4nb8lAUOej0fMhZKF84w\nlyrluut5O9L44WdPceksNU7OlmCotn+AoF4wuVHkADLw/C+EGYSxZUD90e5kTTHm\nFbHOVbs20NArLY3Cqpvpv2f3\n-----END PRIVATE KEY-----\n",
+  "client_email": "luangprabang@luangprabang-173307.iam.gserviceaccount.com",
+  "client_id": "103454773416080556908",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/luangprabang%40luangprabang-173307.iam.gserviceaccount.com"
+}

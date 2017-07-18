@@ -225,6 +225,43 @@ class PlaceController extends Controller
     }
 
     public function actionSyncfirebase() {
+//        $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/google-service-account.json');
 
+        $models = Place::find()
+            ->where(['status' => 'A'])
+            ->orderBy('last_update desc');
+
+        if(isset($models)) {
+            try {
+                $serviceAccount = ServiceAccount::fromJsonFile('js/luangprabang-c87aa49a5004.json');
+                $firebase = (new Factory)
+                    ->withServiceAccount($serviceAccount)
+                    ->withDatabaseUri('https://luangprabang.firebaseio.com')
+                    ->create();
+                $database = $firebase->getDatabase();
+                foreach ($models as $model) {
+                    $place = $database
+                        ->getReference('luangprabang/places')
+                        ->push([
+                            'name_lao' => $model->name_lao,
+                            'name_eng' => $model->name_eng,
+                            'lat' => $model->lat,
+                            'lon' => $model->lon,
+                            'village_lao' => $model->village_lao,
+                            'village_eng' => $model->village_eng,
+                            'description_lao' => $model->description_lao,
+                            'description_eng' => $model->description_eng,
+                            'district_id' => $model->district_id,
+                            'user_id' => $model->user_id,
+                            'last_update' => $model->last_update,
+                            'logo' => $model->logo,
+                        ]);
+                    print_r($place);
+                    echo "<hr/>";
+                }
+            } catch (Exception $ex) {
+                print_r($ex->getMessage());
+            }
+        }
     }
 }

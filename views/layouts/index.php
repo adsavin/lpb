@@ -77,4 +77,4 @@ NavBar::end();
 
     <?= $content ?>
 </div>
-<?php $this->endContent(); ?>
+<?php $this->endContent();
