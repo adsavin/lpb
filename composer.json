@@ -19,8 +19,7 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "2amigos/yii2-ckeditor-widget": "^2.1",
-        "kreait/firebase-php": "^1.2",
-        "php-http/httplug": "^1.1"
+        "ktamas77/firebase-php": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
