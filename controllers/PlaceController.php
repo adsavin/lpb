@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\District;
 use app\models\Photo;
 use Yii;
 use app\models\Place;
@@ -125,6 +126,7 @@ class PlaceController extends Controller
         $model = $this->findModel($id);
         $temp = $model->logo;
         if ($model->load(Yii::$app->request->post())) {
+            $tx = Yii::$app->db->beginTransaction();
             try {
                 $model->logouploader = UploadedFile::getInstance($model, 'logouploader');
                 if(!isset($model->logouploader))
@@ -226,20 +228,38 @@ class PlaceController extends Controller
 
     public function actionSyncfirebase() {
         $firebase = new \Firebase\FirebaseLib(Yii::$app->params['FIREBASEDB'], Yii::$app->params['FIREBASETOKEN']);
+
         $models = Place::find()
-            ->where(['status' => 'A'])
+            ->where(['status' => 'Show'])
             ->orderBy('last_update desc')
             ->asArray()
             ->all();
-
         if(isset($models)) {
             try {
-                foreach ($models as $key => $model) {
-                    $firebase->set('/place/'.$key, $model);
+                foreach ($models as $key => $model)  {
+                    $model['district'] = District::find()->asArray()->where(['id'=> $model['district_id']])->one();
+                    $model['photos'] = Photo::find()->asArray()->where(['place_id' => $model['id']])->all();
+                    $firebase->set('/places/'.$key, $model);
                 }
             } catch (Exception $ex) {
                 print_r($ex->getMessage());
             }
         }
+
+        $models = District::find()
+            ->asArray()
+            ->all();
+        if(isset($models)) {
+            try {
+                foreach ($models as $key => $model)  {
+                    $firebase->set('/districts/'.$key, $model);
+                }
+            } catch (Exception $ex) {
+                print_r($ex->getMessage());
+            }
+        }
+
+        Yii::$app->session->setFlash('success', Yii::t('app', 'Sync Firebase Successful'));
+        return $this->redirect(['site/index']);
     }
 }

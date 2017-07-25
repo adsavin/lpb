@@ -55,6 +55,7 @@ class Place extends \yii\db\ActiveRecord
             [['district_id', 'user_id'], 'integer'],
             [['last_update'], 'safe'],
             [['name_lao', 'name_eng', 'village_lao', 'village_eng', 'logo', 'lat', 'lon'], 'string', 'max' => 255],
+            [['status'], 'string', 'max' => 5],
             [['name_lao'], 'unique'],
             [['name_eng'], 'unique'],
             [['district_id'], 'exist', 'skipOnError' => true, 'targetClass' => District::className(), 'targetAttribute' => ['district_id' => 'id']],
